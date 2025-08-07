@@ -1,0 +1,34 @@
+{
+  "home": {
+    "name": "Blue FC",
+    "players": [
+      {"name": "Player1", "position": "GK", "speed": 50, "passing": 40, "shooting": 30, "defense": 60, "stamina": 80},
+      {"name": "Player2", "position": "DF", "speed": 60, "passing": 55, "shooting": 40, "defense": 65, "stamina": 80},
+      {"name": "Player3", "position": "DF", "speed": 60, "passing": 55, "shooting": 40, "defense": 65, "stamina": 80},
+      {"name": "Player4", "position": "DF", "speed": 60, "passing": 55, "shooting": 40, "defense": 65, "stamina": 80},
+      {"name": "Player5", "position": "DF", "speed": 60, "passing": 55, "shooting": 40, "defense": 65, "stamina": 80},
+      {"name": "Player6", "position": "MF", "speed": 70, "passing": 70, "shooting": 50, "defense": 50, "stamina": 90},
+      {"name": "Player7", "position": "MF", "speed": 70, "passing": 70, "shooting": 50, "defense": 50, "stamina": 90},
+      {"name": "Player8", "position": "MF", "speed": 70, "passing": 70, "shooting": 50, "defense": 50, "stamina": 90},
+      {"name": "Player9", "position": "MF", "speed": 70, "passing": 70, "shooting": 50, "defense": 50, "stamina": 90},
+      {"name": "Player10", "position": "FW", "speed": 80, "passing": 60, "shooting": 75, "defense": 30, "stamina": 85},
+      {"name": "Player11", "position": "FW", "speed": 80, "passing": 60, "shooting": 75, "defense": 30, "stamina": 85}
+    ]
+  },
+  "away": {
+    "name": "Red United",
+    "players": [
+      {"name": "A1", "position": "GK", "speed": 50, "passing": 40, "shooting": 30, "defense": 60, "stamina": 80},
+      {"name": "A2", "position": "DF", "speed": 60, "passing": 55, "shooting": 40, "defense": 65, "stamina": 80},
+      {"name": "A3", "position": "DF", "speed": 60, "passing": 55, "shooting": 40, "defense": 65, "stamina": 80},
+      {"name": "A4", "position": "DF", "speed": 60, "passing": 55, "shooting": 40, "defense": 65, "stamina": 80},
+      {"name": "A5", "position": "DF", "speed": 60, "passing": 55, "shooting": 40, "defense": 65, "stamina": 80},
+      {"name": "A6", "position": "MF", "speed": 70, "passing": 70, "shooting": 50, "defense": 50, "stamina": 90},
+      {"name": "A7", "position": "MF", "speed": 70, "passing": 70, "shooting": 50, "defense": 50, "stamina": 90},
+      {"name": "A8", "position": "MF", "speed": 70, "passing": 70, "shooting": 50, "defense": 50, "stamina": 90},
+      {"name": "A9", "position": "MF", "speed": 70, "passing": 70, "shooting": 50, "defense": 50, "stamina": 90},
+      {"name": "A10", "position": "FW", "speed": 80, "passing": 60, "shooting": 75, "defense": 30, "stamina": 85},
+      {"name": "A11", "position": "FW", "speed": 80, "passing": 60, "shooting": 75, "defense": 30, "stamina": 85}
+    ]
+  }
+}
