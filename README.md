@@ -24,3 +24,9 @@ python team_editor.py home NewPlayer MF 70 70 50 50 90
 This adds a new player to the home team.
 
 The project is modular to allow future expansion such as tournaments, transfers, training and club management.
+
+## WhatsApp + MCP Integration
+To execute approved commands from WhatsApp through an MCP bridge, see:
+
+- `integrations/README_whatsapp_mcp.md`
+- `integrations/whatsapp_mcp_bridge.py`
