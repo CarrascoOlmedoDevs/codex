@@ -1,7 +1,7 @@
 # The Saka Law: Measuring Recursive Technological Acceleration and Its Implications for Biomedical Longevity
 
 **Javier Carrasco ("Saka")**  
-Version 0.2 — 26 September 2026  
+Version 0.3 — 26 September 2026  
 Conceptual / forecasting paper — not peer reviewed
 
 ## Abstract
@@ -210,7 +210,7 @@ with each component normalized to its 2026 value (2026 = 1):
 
 | Symbol | Component | Candidate operational proxy |
 |---|---|---|
-| $A$ | AI and scientific-reasoning capability | METR 50%-success task horizon of the best available agent [16] |
+| $A$ | AI and scientific-reasoning capability | Composite index of sub-measures (see below); METR 50%-success task horizon [16] is one component |
 | $C$ | Compute availability | Installed AI compute stock, FLOP/s [15] |
 | $E$ | Energy abundance and reliability | Electricity supplied to data centres and labs, TWh/yr, adjusted for unmet interconnection requests [18] |
 | $R$ | Robotics / laboratory automation | Experiments per researcher per year in tracked self-driving-lab domains |
@@ -221,6 +221,14 @@ with each component normalized to its 2026 value (2026 = 1):
 | $L$ | Clinical translation efficiency | Inverse of median time from IND filing to approval |
 
 The proxies are proposals. Each must be fixed, together with its data source, before the first forecast is scored.
+
+**Why $A$ needs its own sub-index.** The METR time horizon is measured mostly on software and machine-learning tasks. An agent that can work autonomously on code for forty hours does not necessarily have equivalent capability in biological or chemical research. Using it alone would turn one domain-specific benchmark into a stand-in for "scientific intelligence" in general. $A$ is therefore defined as a weighted geometric mean of normalized sub-measures:
+
+$$
+A_t = \prod_k a_{k,t}^{\,v_k}, \qquad \sum_k v_k = 1,
+$$
+
+with candidate components: autonomous task horizon (METR); research-level mathematics benchmarks (e.g. FrontierMath); formal theorem proving (share of target statements with machine-checked proofs); scientific hypothesis generation, scored by later experimental confirmation; experimental planning in the wet-lab sciences; and coding. The sub-weights $v_k$ are fixed at preregistration, and results are reported both for the composite and for each component.
 
 ### 7.2 Aggregation
 
@@ -342,7 +350,7 @@ A major acceleration in ageing-biology papers with no reduction in $L_1 \rightar
 
 ## 11. Longevity Escape Velocity proxy
 
-Longevity escape velocity (LEV) [23] can be defined in two equivalent ways, which must not be mixed.
+Longevity escape velocity (LEV) [23] can be represented in two related ways, which must not be mixed. They are not equivalent as observed quantities: one is a population measure, the other depends on an individual's own risk trajectory.
 
 **Period definition (used by this framework).** Let $HALE_x(t)$ be the period healthy-life expectancy at a fixed age $x$ (for example 65) in calendar year $t$, computed from that year's age-specific health and mortality rates. Define
 
@@ -356,9 +364,9 @@ Interpretation:
 - $0 < LEV_x < 1$: medical progress offsets part of ageing; a person who ages one year gains less than one year of expected healthy life;
 - $LEV_x \ge 1$: the healthy-life-expectancy frontier moves outward by at least one year per elapsed year—the operational definition of longevity escape velocity in this framework.
 
-**Individual definition (equivalent).** For a person aged $a(t)$, let $h(t)$ be their *remaining* expected healthy life. Ageing alone makes $h$ fall over time, so escape velocity corresponds to $dh/dt \ge 0$, not $\ge 1$. Using remaining life expectancy with a threshold of 1 would double-count the passage of time.
+**Individual representation.** For a person aged $a(t)$, let $h(t)$ be their *remaining* expected healthy life. Ageing alone makes $h$ fall over time, so escape velocity corresponds to $dh/dt \ge 0$, not $\ge 1$. Using remaining life expectancy with a threshold of 1 would double-count the passage of time. Because $h_i(t)$ depends on the person's own health and risk, it cannot be read directly from period life tables; the two quantities agree only for an individual whose risk matches the population's at each age.
 
-**Baseline.** Historical record period life expectancy has risen by about 0.25 years per year [22]. The current value of the proxy is therefore of the order of 0.2–0.3, and far below 1. Healthy-life expectancy has generally grown more slowly than total life expectancy.
+**Reference point, not an estimate.** Record period life expectancy *at birth* has risen by about 0.25 years per year for more than 160 years [22]. That is a reference for the frontier of total life expectancy; it is not an estimate of $LEV_{65}$, which is a different series (healthy rather than total life, at age 65 rather than at birth, and in a given population rather than the record-holding one). Healthy-life expectancy has generally grown more slowly than total life expectancy. The current empirical value of the proxy must be estimated from fixed-age HALE series, and establishing that baseline is one of the first data tasks of the framework.
 
 This is an operational forecasting proxy rather than an accepted clinical metric. The framework does not claim that $LEV_x \ge 1$ has been achieved.
 
@@ -441,7 +449,7 @@ A reasonable scenario family for FTAF should include:
 - **central:** sustained AI/science acceleration with progressively declining growth rates;
 - **aggressive:** major breakthroughs in AI, automation, energy or manufacturing that extend the high-growth regime.
 
-Version 0.2 does not attach numbers to these scenarios. They will be quantified once the proxies of Section 7.1 have been populated.
+Version 0.3 does not attach numbers to these scenarios. They will be quantified once the proxies of Section 7.1 have been populated.
 
 The central qualitative expectation for 2046 is not "immortality". It is increased probability of:
 
@@ -480,16 +488,25 @@ The framework therefore treats "systemic rejuvenation" and "longevity escape vel
 
 ## 17. Predictions that make the framework falsifiable
 
-The qualitative predictions of version 0.1 are replaced by dated, quantitative ones. The thresholds below are **proposals**; they must be fixed, with data sources and estimation methods, in a preregistration before any of the tested windows closes. Windows start on 1 January 2026.
+The qualitative predictions of version 0.1 are replaced by dated, quantitative ones. Windows start on 1 January 2026.
+
+**Status of the thresholds.** The numbers below (for example $TAR > 1.5$ or a 50% fall in SCT) are **placeholders chosen as plausible magnitudes, not derived values**. Before preregistration, each threshold must be derived from two inputs:
+
+1. *Historical variability*: the distribution of the same statistic over past windows of the same length, so that a threshold is exceeded with at most 5% probability if the historical regime continues; and
+2. *Minimum relevant effect*: the smallest change that would matter scientifically or clinically.
+
+The preregistered threshold is the larger of the two. This turns the predictions from subjective cut-offs into statistical tests.
+
+**Intervals.** All estimates are reported with 50%, 80% and 95% intervals. The **90% interval** is preregistered as the decision criterion: "lower bound above 1" or "interval excluding 0" below refers to it.
 
 **Supporting predictions.** If recursive acceleration is real, then:
 
 | # | Prediction | Window | Supports the hypothesis if… |
 |---|---|---|---|
-| P1 | Cross-domain acceleration | 2026–2031 | $TAR > 1.5$, with the lower bound of its 80% interval above 1, in at least 3 of the HTAB domains |
-| P2 | Rising growth rate | 2026–2031 | Estimated $dg_F/dt > 0$ for FTAF, with its 80% interval excluding 0 |
+| P1 | Cross-domain acceleration | 2026–2031 | $TAR > 1.5$, with the lower bound of its 90% interval above 1, in at least 3 of the HTAB domains |
+| P2 | Rising growth rate | 2026–2031 | Estimated $dg_F/dt > 0$ for FTAF, with its 90% interval excluding 0 |
 | P3 | Research productivity reverses | 2026–2036 | Research productivity (in the sense of [6]) rises in at least 2 of the domains studied there |
-| P4 | Autonomy keeps growing | 2026–2031 | The METR 50% time-horizon doubling time stays at or below 12 months |
+| P4 | Autonomy keeps growing | 2026–2031 | The METR 50% time-horizon doubling time stays at or below 12 months, and the composite $A$ index keeps rising in its non-software components |
 | P5 | Faster experimental loops | 2026–2031 | Median SCT falls by at least 50% in at least 2 tracked self-driving-lab domains, with no fall in $Q_t$ |
 | P6 | Replicated AI discoveries | 2026–2031 | The annual number of independently replicated discoveries attributed mainly to AI systems at least doubles |
 | P7 | Faster translation | 2026–2036 | Median IND-to-approval time falls by at least 20% relative to 2015–2025 in at least one therapeutic area |
@@ -500,10 +517,10 @@ The qualitative predictions of version 0.1 are replaced by dated, quantitative o
 - $TAR$ is not distinguishable from 1 in a majority of HTAB domains (P1 fails);
 - AI benchmark and autonomy metrics keep improving (P4 holds) while SCT, $Q_t$ and replication rates do not (P5 and P6 fail);
 - clinical translation times and success probabilities are statistically unchanged (P7 and P8 fail);
-- $LEV_{65}(t)$ for the largest high-income populations stays below 0.3 through 2046;
+- $LEV_{65}(t)$ for the largest high-income populations shows no increase over its own 2000–2025 trend through 2046;
 - persistent energy, fabrication, regulatory or biological bottlenecks explain most of the shortfall.
 
-Failure of P7, P8 and the LEV threshold while P1–P6 succeed would support recursive acceleration in computation and discovery but refute its extension to biomedicine—itself an informative result.
+Failure of P7, P8 and the LEV criterion while P1–P6 succeed would support recursive acceleration in computation and discovery but refute its extension to biomedicine—itself an informative result.
 
 ---
 
@@ -655,11 +672,18 @@ The hypothesis will become scientifically useful only if its metrics are populat
 
 ---
 
+## Changes from version 0.2
+
+- LEV: the 0.25 years/year trend is now presented as a reference for record life expectancy at birth, not as an estimate of $LEV_{65}$; the fixed-age HALE baseline is to be estimated from data. The two LEV forms are described as related, not equivalent. The LEV refutation criterion is now relative to its own historical trend.
+- Prediction thresholds are marked as placeholders, with a rule for deriving them from historical variability and minimum relevant effect.
+- Intervals: 50/80/95% reported; the 90% interval is preregistered as the decision criterion (previously 80%).
+- $A$ is now a composite index; the METR time horizon is one component rather than the whole proxy.
+
 ## Changes from version 0.1
 
 - Restated the law as a claim about the **growth rate** of technology (super-exponential growth, rising research productivity) instead of $\ddot{T} > 0$, which any exponential satisfies.
 - Added related work (idea-production function, falling research productivity, Eroom's law, AI and explosive growth) and a subsection of evidence against the hypothesis.
-- Corrected the LEV proxy: it is now defined on period healthy-life expectancy at a fixed age with threshold 1, and the equivalent individual definition with threshold 0 is stated; added the historical baseline of about 0.25 years per year.
+- Corrected the LEV proxy: it is now defined on period healthy-life expectancy at a fixed age with threshold 1, and the equivalent individual definition with threshold 0 is stated; added the historical reference of about 0.25 years per year.
 - Clarified that a weighted geometric mean has unit elasticity of substitution and added a CES generalization with $\sigma$ as a sensitivity parameter.
 - Separated system-level friction (BPI) from intervention-level evidence (EMS) and accessibility (DAI); removed double counting of energy, fabrication and translation in BPI.
 - Defined $G_j(t)$ in the arrival hazard (previously $M_j$, which clashed with manufacturing).

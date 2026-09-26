@@ -1,4 +1,4 @@
-# Saka Forecasting Engine — Model Specification v0.2
+# Saka Forecasting Engine — Model Specification v0.3
 
 ## 1. State vector
 
@@ -12,7 +12,7 @@ where:
 
 | Symbol | Component | Candidate operational proxy |
 |---|---|---|
-| $A$ | AI / scientific-intelligence capability | METR 50%-success task horizon of the best available agent |
+| $A$ | AI / scientific-intelligence capability | Composite index (Section 1.1); METR 50%-success task horizon is one component |
 | $C$ | Compute availability | Installed AI compute stock, FLOP/s |
 | $E$ | Energy abundance | Electricity supplied to data centres and labs, TWh/yr, adjusted for unmet interconnection requests |
 | $R$ | Robotics and laboratory automation | Experiments per researcher per year in tracked self-driving-lab domains |
@@ -23,6 +23,16 @@ where:
 | $L$ | Clinical translation efficiency | Inverse of median time from IND filing to approval |
 
 Each component is normalized to a baseline year, initially 2026 = 1. Proxies and data sources must be fixed before the first forecast is scored.
+
+### 1.1 Composite scientific-capability index
+
+METR time horizons are measured mostly on software/ML tasks and must not stand in for scientific capability in general. Define
+
+$$
+A_t = \prod_k a_{k,t}^{\,v_k}, \qquad \sum_k v_k = 1,
+$$
+
+over normalized sub-measures $a_k$: autonomous task horizon (METR); research-level mathematics (e.g. FrontierMath); formal theorem proving; scientific hypothesis generation scored by later experimental confirmation; wet-lab experimental planning; coding. Fix $v_k$ at preregistration; report the composite and each component.
 
 ## 2. Gross acceleration index
 
@@ -212,9 +222,9 @@ Interpretation:
 - $0 < LEV_x < 1$: medicine offsets part of chronological ageing.
 - $LEV_x \geq 1$: operational definition of longevity escape velocity for this framework.
 
-**Individual definition (equivalent).** For an individual, let $h(t)$ be *remaining* expected healthy life. Ageing alone makes $h$ decrease, so escape velocity is $dh/dt \geq 0$. Do not combine remaining life expectancy with a threshold of 1.
+**Individual representation (related, not equivalent).** For individual $i$, let $h_i(t)$ be *remaining* expected healthy life. Ageing alone makes $h_i$ decrease, so escape velocity is $dh_i/dt \geq 0$. Do not combine remaining life expectancy with a threshold of 1. $h_i$ depends on individual risk and cannot be read from period tables; it matches the population measure only for someone whose risk equals the population's at each age.
 
-**Baseline.** Record period life expectancy has risen by about 0.25 years per year since 1840 (Oeppen & Vaupel 2002), so the current proxy value is of order 0.2–0.3.
+**Reference, not an estimate.** Record period life expectancy at birth has risen by about 0.25 years per year since 1840 (Oeppen & Vaupel 2002). This is a different series from $HALE_{65}$ and does not estimate $LEV_{65}$; the proxy's current value must be estimated from fixed-age HALE series.
 
 This is a forecasting construct, not an accepted clinical metric.
 
@@ -258,14 +268,18 @@ Future versions should:
 
 ## 12. Falsification criteria
 
-Windows start on 1 January 2026. Thresholds are proposals to be fixed in a preregistration before any window closes.
+Windows start on 1 January 2026.
+
+Thresholds below are **placeholders**. Before preregistration, each is replaced by the larger of (1) the value exceeded with at most 5% probability under the historical regime, from the statistic's variability over past windows of equal length, and (2) the minimum scientifically or clinically relevant effect.
+
+Report 50/80/95% intervals; the **90% interval** is the preregistered decision criterion.
 
 | # | Prediction | Window | Supports the hypothesis if… |
 |---|---|---|---|
-| P1 | Cross-domain acceleration | 2026–2031 | $TAR > 1.5$, lower 80% bound $> 1$, in at least 3 HTAB domains |
-| P2 | Rising growth rate | 2026–2031 | $dg_F/dt > 0$, 80% interval excluding 0 |
+| P1 | Cross-domain acceleration | 2026–2031 | $TAR > 1.5$, lower 90% bound $> 1$, in at least 3 HTAB domains |
+| P2 | Rising growth rate | 2026–2031 | $dg_F/dt > 0$, 90% interval excluding 0 |
 | P3 | Research productivity reverses | 2026–2036 | Research productivity (Bloom et al. 2020 sense) rises in at least 2 of their domains |
-| P4 | Autonomy keeps growing | 2026–2031 | METR 50% time-horizon doubling time $\leq$ 12 months |
+| P4 | Autonomy keeps growing | 2026–2031 | METR 50% time-horizon doubling time $\leq$ 12 months, and non-software components of $A$ rising |
 | P5 | Faster experimental loops | 2026–2031 | Median SCT falls $\geq$ 50% in at least 2 self-driving-lab domains, with no fall in $Q_t$ |
 | P6 | Replicated AI discoveries | 2026–2031 | Annual independently replicated AI-originated discoveries at least double |
 | P7 | Faster translation | 2026–2036 | Median IND-to-approval time falls $\geq$ 20% vs 2015–2025 in at least one therapeutic area |
@@ -276,9 +290,9 @@ The Saka Law should be weakened or rejected as a useful forecasting hypothesis i
 - $TAR$ is not distinguishable from 1 in a majority of HTAB domains;
 - AI capability and autonomy improve (P4) but SCT, $Q_t$ and replication do not (P5, P6 fail);
 - biological translation times and success probabilities remain statistically unchanged (P7, P8 fail);
-- $LEV_{65}(t)$ in the largest high-income populations stays below 0.3 through 2046;
+- $LEV_{65}(t)$ in the largest high-income populations shows no increase over its own 2000–2025 trend through 2046;
 - persistent physical, economic or regulatory bottlenecks dominate the feedback loop.
 
-Success of P1–P6 with failure of P7, P8 and the LEV threshold would support acceleration in computation and discovery but not its extension to biomedicine.
+Success of P1–P6 with failure of P7, P8 and the LEV criterion would support acceleration in computation and discovery but not its extension to biomedicine.
 
 The model is therefore designed to permit a negative result.
