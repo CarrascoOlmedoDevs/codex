@@ -1,0 +1,23 @@
+series_id,role,domain,metric,direction,window,historical_window,k,se_k,ci80_low,ci80_high,ci90_low,ci90_high,ci95_low,ci95_high,doubling_or_halving_years,sens_ar1_se,sens_ar1_ci90_low,sens_ar1_ci90_high,residual_rho_corrected,model,hac_lag,n_observations
+genome,fast,genomics,cost_per_genome,lower_is_better,historical,2001-2015,0.5992,0.0632,0.5135,0.6850,0.4866,0.7119,0.4615,0.7370,1.16,0.0655,0.4825,0.7160,0.776,OLS ln X ~ year + level shift 2008,2,15
+genome,fast,genomics,cost_per_genome,lower_is_better,full_sample,2001-2022,0.4141,0.0634,0.3299,0.4983,0.3045,0.5237,0.2814,0.5468,1.67,0.0561,0.3171,0.5111,0.637,OLS ln X ~ year + level shift 2008,2,22
+transistors,fast,semiconductors,transistors_per_microprocessor,higher_is_better,historical,1986-2014,0.3743,0.0085,0.3631,0.3855,0.3598,0.3888,0.3568,0.3918,1.85,0.0109,0.3556,0.3930,0.209,OLS ln X ~ year,2,27
+transistors,fast,semiconductors,transistors_per_microprocessor,higher_is_better,full_sample,1986-2021,0.3588,0.0066,0.3502,0.3675,0.3476,0.3701,0.3453,0.3724,1.93,0.0095,0.3428,0.3749,0.357,OLS ln X ~ year,3,33
+transistors,fast,semiconductors,transistors_per_microprocessor,higher_is_better,pre_1986_context,1971-1985,0.3467,0.0074,0.3353,0.3581,0.3308,0.3625,0.3260,0.3673,2.00,0.0108,0.3236,0.3697,-0.505,OLS ln X ~ year,2,6
+supercomputer,fast,compute,fastest_supercomputer_rmax,higher_is_better,historical,1993-2015,0.6297,0.0147,0.6103,0.6492,0.6044,0.6550,0.5991,0.6603,1.10,0.0143,0.6051,0.6543,0.156,OLS ln X ~ year,2,23
+supercomputer,fast,compute,fastest_supercomputer_rmax,higher_is_better,full_sample,1993-2025,0.5539,0.0203,0.5273,0.5804,0.5195,0.5882,0.5125,0.5952,1.25,0.0299,0.5032,0.6045,0.816,OLS ln X ~ year,3,33
+dram,fast,memory,dram_price_per_tb,lower_is_better,historical,1986-2015,0.4570,0.0177,0.4338,0.4802,0.4270,0.4871,0.4208,0.4932,1.52,0.0295,0.4068,0.5072,0.764,OLS ln X ~ year,3,30
+dram,fast,memory,dram_price_per_tb,lower_is_better,full_sample,1986-2023,0.3802,0.0284,0.3431,0.4173,0.3322,0.4282,0.3225,0.4378,1.82,0.0365,0.3186,0.4417,0.970,OLS ln X ~ year,3,38
+dram,fast,memory,dram_price_per_tb,lower_is_better,pre_1986_context,1957-1985,0.4883,0.0256,0.4541,0.5226,0.4436,0.5331,0.4340,0.5427,1.42,0.0325,0.4315,0.5451,0.457,OLS ln X ~ year,2,18
+pv,fast,energy,pv_module_cost,lower_is_better,historical,1986-2015,0.0885,0.0153,0.0685,0.1086,0.0626,0.1145,0.0572,0.1198,7.83,0.0144,0.0641,0.1130,0.970,OLS ln X ~ year,3,30
+pv,fast,energy,pv_module_cost,lower_is_better,full_sample,1986-2024,0.1106,0.0087,0.0992,0.1220,0.0959,0.1254,0.0929,0.1283,6.27,0.0132,0.0883,0.1329,0.970,OLS ln X ~ year,3,39
+pv,fast,energy,pv_module_cost,lower_is_better,pre_1986_context,1975-1985,0.2009,0.0167,0.1778,0.2240,0.1702,0.2315,0.1631,0.2387,3.45,0.0150,0.1734,0.2284,0.909,OLS ln X ~ year,2,11
+ag_tfp,control,agriculture,agricultural_tfp_index,higher_is_better,historical,1986-2015,0.0157,0.0003,0.0153,0.0161,0.0151,0.0162,0.0150,0.0163,44.22,0.0005,0.0148,0.0166,0.741,OLS ln X ~ year,3,30
+ag_tfp,control,agriculture,agricultural_tfp_index,higher_is_better,full_sample,1986-2019,0.0155,0.0002,0.0152,0.0159,0.0152,0.0159,0.0151,0.0160,44.58,0.0004,0.0148,0.0163,0.717,OLS ln X ~ year,3,34
+ag_tfp,control,agriculture,agricultural_tfp_index,higher_is_better,pre_1986_context,1961-1985,0.0040,0.0007,0.0032,0.0049,0.0029,0.0052,0.0027,0.0054,172.03,0.0009,0.0025,0.0056,0.695,OLS ln X ~ year,2,25
+wheat,control,agriculture,wheat_yield,higher_is_better,historical,1986-2014,0.0118,0.0005,0.0111,0.0125,0.0109,0.0127,0.0107,0.0129,58.59,0.0007,0.0107,0.0130,0.108,OLS ln X ~ year,3,29
+wheat,control,agriculture,wheat_yield,higher_is_better,full_sample,1986-2014,0.0118,0.0005,0.0111,0.0125,0.0109,0.0127,0.0107,0.0129,58.59,0.0007,0.0107,0.0130,0.108,OLS ln X ~ year,3,29
+wheat,control,agriculture,wheat_yield,higher_is_better,pre_1986_context,1961-1985,0.0273,0.0011,0.0259,0.0288,0.0255,0.0292,0.0251,0.0296,25.36,0.0012,0.0253,0.0293,-0.090,OLS ln X ~ year,2,25
+us_tfp,control,whole_economy,total_factor_productivity,higher_is_better,historical,1986-2015,0.0126,0.0006,0.0117,0.0134,0.0115,0.0137,0.0113,0.0139,55.13,0.0008,0.0112,0.0139,0.970,OLS ln X ~ year,3,30
+us_tfp,control,whole_economy,total_factor_productivity,higher_is_better,full_sample,1986-2016,0.0123,0.0006,0.0115,0.0132,0.0112,0.0134,0.0110,0.0136,56.32,0.0008,0.0109,0.0137,0.970,OLS ln X ~ year,3,31
+us_tfp,control,whole_economy,total_factor_productivity,higher_is_better,pre_1986_context,1890-1985,0.0207,0.0006,0.0200,0.0214,0.0198,0.0216,0.0196,0.0218,33.46,0.0013,0.0185,0.0229,0.929,OLS ln X ~ year,3,96

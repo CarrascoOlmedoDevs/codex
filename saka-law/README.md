@@ -32,23 +32,18 @@ The longevity component asks a narrower question: **can medical progress increas
 - [paper.md](./paper.md) — full conceptual paper.
 - [model-spec.md](./model-spec.md) — equations, variables and proposed update procedure.
 
-## Suggested repository structure for future versions
+## Data and code (HTAB v0)
 
-```
-saka-law/
-├── README.md
-├── paper.md
-├── model-spec.md
-├── data/
-│   ├── historical_baseline.csv
-│   ├── ai_metrics.csv
-│   ├── biotech_translation.csv
-│   └── energy_space_robotics.csv
-├── notebooks/
-│   ├── fit_growth_models.ipynb
-│   └── monte_carlo_forecast.ipynb
-└── figures/
-```
+The first empirical baseline is in [data/htab/](./data/htab/):
+
+- [UNIVERSE.md](./data/htab/UNIVERSE.md) — series, windows and estimation rules, frozen before the data were analysed.
+- [RESULTS.md](./data/htab/RESULTS.md) — first HTAB and TAR results, uncertainty checks and how to read them.
+- `raw.csv` — all series in long format with source, quality flag and methodology-break columns; `sources/` holds the retrieved snapshots.
+- `results/` — per-domain and aggregate tables.
+
+Code in [src/](./src/): `build_raw.py`, `build_htab.py`, `calculate_tar.py`, `coverage_check.py` (Python 3, numpy, scipy).
+
+Planned additions: remaining HTAB series, AI-component growth rates, Monte Carlo forecasting, scoring, and the frozen preregistration in `forecasts/`.
 
 ## Citation
 
