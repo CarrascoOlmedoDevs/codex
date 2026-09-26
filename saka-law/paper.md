@@ -1,7 +1,7 @@
 # The Saka Law: Measuring Recursive Technological Acceleration and Its Implications for Biomedical Longevity
 
 **Javier Carrasco ("Saka")**  
-Version 0.3 — 26 September 2026  
+Version 0.3.1 — 26 September 2026  
 Conceptual / forecasting paper — not peer reviewed
 
 ## Abstract
@@ -328,6 +328,18 @@ Latency alone can be misleading: a laboratory can shorten each loop while runnin
 
 An AI system producing one million low-quality hypotheses is not scientific acceleration if experimental validation and replication remain unchanged.
 
+**AI attribution scale.** To count "AI-originated" discoveries (prediction P6), each discovery is graded by the role of AI systems in its intellectual work:
+
+| Level | Role of AI |
+|---|---|
+| $AI_0$ | Auxiliary tool (search, writing, routine code) |
+| $AI_1$ | Data analysis or modelling on a human-designed study |
+| $AI_2$ | Partial hypothesis generation or experimental design, with humans leading |
+| $AI_3$ | Principal scientific contribution: AI proposed the hypothesis *and* designed the decisive experiment or proof; humans executed, checked or supervised |
+| $AI_4$ | Essentially autonomous discovery: AI proposed, executed (in silico or through automated laboratories) and interpreted the work, with humans limited to approval and verification |
+
+Levels are assigned from author-contribution statements (e.g. CRediT roles) and methods sections by two independent coders blind to the prediction, with inter-rater agreement (Cohen's $\kappa$) reported. Disagreements are resolved to the lower level. Only $AI_3$ and $AI_4$ discoveries count toward P6.
+
 ---
 
 ## 10. Longevity Translation Index (LTI)
@@ -343,6 +355,11 @@ $$
 where $L_0$ = hypothesis, $L_1$ = in vitro, $L_2$ = animal, $L_3$ = large animal, $L_4$ = Phase I, $L_5$ = Phase II, $L_6$ = Phase III, $L_7$ = approval, and $L_8$ = clinically meaningful or mortality benefit.
 
 The model should estimate transition probabilities and transition times between levels, using historical baselines such as [21].
+
+Two methodological requirements apply to these estimates and to predictions P7 and P8:
+
+- **Composition bias.** A change in the mix of programmes can move averages without any change in the process: if many simple drugs and few oncology drugs enter development, median time to approval falls even if nothing improved. Comparisons are therefore made *within* strata of the same therapeutic area and the same modality (small molecule, biologic, cell therapy, gene therapy, etc.), between cohorts defined by the year of IND filing, and then combined with fixed stratum weights.
+- **Censoring.** Many programmes in recent cohorts will still be unresolved when a window closes. Excluding them would bias recent times downward (only fast successes are observed). Times to approval are therefore estimated with survival analysis—Kaplan–Meier curves and Cox models with therapeutic area and modality as covariates—and phase progression with a multistate model ($L_4 \rightarrow L_5 \rightarrow L_6 \rightarrow L_7$, with failure as a competing absorbing state).
 
 A major acceleration in ageing-biology papers with no reduction in $L_1 \rightarrow L_8$ translation time, and no improvement in transition probabilities, would argue against strong biomedical recursive acceleration.
 
@@ -449,7 +466,7 @@ A reasonable scenario family for FTAF should include:
 - **central:** sustained AI/science acceleration with progressively declining growth rates;
 - **aggressive:** major breakthroughs in AI, automation, energy or manufacturing that extend the high-growth regime.
 
-Version 0.3 does not attach numbers to these scenarios. They will be quantified once the proxies of Section 7.1 have been populated.
+Version 0.3.1 does not attach numbers to these scenarios. They will be quantified once the proxies of Section 7.1 have been populated.
 
 The central qualitative expectation for 2046 is not "immortality". It is increased probability of:
 
@@ -488,7 +505,11 @@ The framework therefore treats "systemic rejuvenation" and "longevity escape vel
 
 ## 17. Predictions that make the framework falsifiable
 
-The qualitative predictions of version 0.1 are replaced by dated, quantitative ones. Windows start on 1 January 2026.
+The qualitative predictions of version 0.1 are replaced by dated, quantitative ones.
+
+**This version is not the preregistration.** Version 0.3.1 fixes the *form* of each prediction and the rule for deriving its threshold, but not the thresholds themselves. The preregistration is made when that rule has been applied to historical data and the resulting numbers are frozen, with a timestamp, in a public file (planned: `forecasts/preregistration-2026.json`), before any data from the tested windows are examined.
+
+**Windows.** Each window starts on the date the preregistration is frozen, not on 1 January 2026; data observed before that date are used only to estimate baselines. The window labels below (2026–2031, 2026–2036) are nominal and assume a freeze in late 2026.
 
 **Status of the thresholds.** The numbers below (for example $TAR > 1.5$ or a 50% fall in SCT) are **placeholders chosen as plausible magnitudes, not derived values**. Before preregistration, each threshold must be derived from two inputs:
 
@@ -497,7 +518,7 @@ The qualitative predictions of version 0.1 are replaced by dated, quantitative o
 
 The preregistered threshold is the larger of the two. This turns the predictions from subjective cut-offs into statistical tests.
 
-**Intervals.** All estimates are reported with 50%, 80% and 95% intervals. The **90% interval** is preregistered as the decision criterion: "lower bound above 1" or "interval excluding 0" below refers to it.
+**Intervals.** All estimates are reported with 50%, 80%, 90% and 95% intervals. The **90% interval** is preregistered as the decision criterion: "lower bound above 1" or "interval excluding 0" below refers to it.
 
 **Supporting predictions.** If recursive acceleration is real, then:
 
@@ -508,9 +529,9 @@ The preregistered threshold is the larger of the two. This turns the predictions
 | P3 | Research productivity reverses | 2026–2036 | Research productivity (in the sense of [6]) rises in at least 2 of the domains studied there |
 | P4 | Autonomy keeps growing | 2026–2031 | The METR 50% time-horizon doubling time stays at or below 12 months, and the composite $A$ index keeps rising in its non-software components |
 | P5 | Faster experimental loops | 2026–2031 | Median SCT falls by at least 50% in at least 2 tracked self-driving-lab domains, with no fall in $Q_t$ |
-| P6 | Replicated AI discoveries | 2026–2031 | The annual number of independently replicated discoveries attributed mainly to AI systems at least doubles |
-| P7 | Faster translation | 2026–2036 | Median IND-to-approval time falls by at least 20% relative to 2015–2025 in at least one therapeutic area |
-| P8 | Better clinical success | 2026–2036 | Phase I-to-approval success probability improves by at least 30% relative to [21] in at least one therapeutic area |
+| P6 | Replicated AI discoveries | 2026–2031 | The annual number of independently replicated discoveries graded $AI_3$ or $AI_4$ (Section 9) at least doubles |
+| P7 | Faster translation | 2026–2036 | Median IND-to-approval time, estimated by survival analysis within therapeutic area × modality strata (Section 10), falls by at least 20% relative to 2015–2025 IND cohorts in at least one therapeutic area |
+| P8 | Better clinical success | 2026–2036 | Phase I-to-approval success probability, estimated with a multistate model within therapeutic area × modality strata (Section 10), improves by at least 30% relative to [21] in at least one therapeutic area |
 
 **Refuting outcomes.** The hypothesis should be weakened or rejected as a useful forecasting framework if, by the end of the relevant window:
 
@@ -671,6 +692,13 @@ The hypothesis will become scientifically useful only if its metrics are populat
 25. International Energy Agency. **Energy and AI.** 2025. https://www.iea.org/reports/energy-and-ai
 
 ---
+
+## Changes from version 0.3
+
+- Intervals: 90% added to the reported set (50/80/90/95%), since it is the decision criterion.
+- Stated explicitly that this version is not the preregistration; windows start when the thresholds are frozen, not on 1 January 2026.
+- Added the $AI_0$–$AI_4$ attribution scale, with coding procedure; P6 counts only $AI_3$ and $AI_4$.
+- P7 and P8: comparisons within therapeutic area × modality strata and IND-year cohorts to control composition bias; survival analysis (Kaplan–Meier, Cox) and multistate models to handle censored programmes.
 
 ## Changes from version 0.2
 
