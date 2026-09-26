@@ -1,0 +1,4 @@
+aggregate,n_series,series,k_htab,ci80_low,ci80_high,ci90_low,ci90_high,ci95_low,ci95_high,doubling_or_halving_years
+fast,5,genome;transistors;supercomputer;dram;pv,0.4298,0.4114,0.4475,0.4065,0.4523,0.4019,0.4567,1.61
+control,3,ag_tfp;wheat;us_tfp,0.0134,0.0130,0.0138,0.0129,0.0139,0.0128,0.0140,51.88
+all,8,genome;transistors;supercomputer;dram;pv;ag_tfp;wheat;us_tfp,0.2736,0.2620,0.2850,0.2587,0.2879,0.2556,0.2905,2.53

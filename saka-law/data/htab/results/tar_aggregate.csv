@@ -1,0 +1,2 @@
+aggregate,series,k_historical,k_current,tar,delta_k,tar_ci80_low,tar_ci80_high,delta_k_ci80_low,delta_k_ci80_high,tar_ci90_low,tar_ci90_high,delta_k_ci90_low,delta_k_ci90_high,tar_ci95_low,tar_ci95_high,delta_k_ci95_low,delta_k_ci95_high
+fast series with defined TAR,genome;transistors;supercomputer;dram;pv,0.4298,0.2297,0.534,-0.2001,0.489,0.573,-0.2255,-0.1778,0.478,0.586,-0.2321,-0.1708,0.468,0.598,-0.2379,-0.1647

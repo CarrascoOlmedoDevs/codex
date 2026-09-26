@@ -1,0 +1,9 @@
+series_id,role,historical_window,k_historical,current_window,n_current,k_current,delta_k,delta_k_ci80_low,delta_k_ci80_high,delta_k_ci90_low,delta_k_ci90_high,delta_k_ci95_low,delta_k_ci95_high,tar,tar_ci80_low,tar_ci80_high,tar_ci90_low,tar_ci90_high,tar_ci95_low,tar_ci95_high,reading_90,sens_ar1_delta_k_ci90_low,sens_ar1_delta_k_ci90_high,sens_ar1_reading_90,sens_ar1_tar_defined,robust_reading,note
+genome,fast,2001-2015,0.5992,2016-2022,7,0.1753,-0.4239,-0.5200,-0.3280,-0.5465,-0.3008,-0.5679,-0.2786,0.293,0.208,0.380,0.186,0.406,0.163,0.429,deceleration,-0.5813,-0.2666,deceleration,1,deceleration,
+transistors,fast,1986-2014,0.3743,2016-2021,6,0.3632,-0.0111,-0.0556,0.0226,-0.0639,0.0377,-0.0714,0.0477,0.970,0.854,1.062,0.830,1.101,0.811,1.128,no clear change,-0.1088,0.0867,no clear change,1,no clear change,
+supercomputer,fast,1993-2015,0.6297,2016-2025,10,0.3868,-0.2429,-0.2803,-0.2052,-0.2907,-0.1969,-0.2987,-0.1885,0.614,0.557,0.671,0.543,0.685,0.529,0.697,deceleration,-0.3002,-0.1856,deceleration,1,deceleration,
+dram,fast,1986-2015,0.4570,2016-2023,8,0.1147,-0.3424,-0.3844,-0.3032,-0.3950,-0.2916,-0.4038,-0.2824,0.251,0.172,0.324,0.152,0.344,0.139,0.359,deceleration,-0.4456,-0.2391,deceleration,1,deceleration,
+pv,fast,1986-2015,0.0885,2016-2024,9,0.1082,0.0197,0.0016,0.0383,-0.0032,0.0435,-0.0078,0.0486,1.222,1.017,1.494,0.969,1.596,0.926,1.694,no clear change,-0.0174,0.0568,no clear change,1,no clear change,
+ag_tfp,control,1986-2015,0.0157,,4,,,,,,,,,,,,,,,,,,,,,,not computed: 4 current observations (< 5)
+wheat,control,1986-2014,0.0118,,0,,,,,,,,,,,,,,,,,,,,,,not computed: 0 current observations (< 5)
+us_tfp,control,1986-2015,0.0126,,0,,,,,,,,,,,,,,,,,,,,,,not computed: 0 current observations (< 5)

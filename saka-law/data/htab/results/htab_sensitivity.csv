@@ -1,0 +1,2 @@
+series_id,role,domain,metric,direction,window,historical_window,k,se_k,ci80_low,ci80_high,ci90_low,ci90_high,ci95_low,ci95_high,doubling_or_halving_years,sens_ar1_se,sens_ar1_ci90_low,sens_ar1_ci90_high,residual_rho_corrected,model,hac_lag,n_observations
+genome,fast,genomics,cost_per_genome,lower_is_better,historical_no_break_dummy,2001-2015,0.9016,0.0556,0.8266,0.9766,0.8032,1.0000,0.7816,1.0217,0.77,0.0906,0.7411,1.0622,0.906,OLS ln X ~ year,2,15
