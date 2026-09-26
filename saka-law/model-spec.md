@@ -1,167 +1,187 @@
-# Saka Forecasting Engine — Model Specification v0.1
+# Saka Forecasting Engine — Model Specification v0.2
 
 ## 1. State vector
 
-At time (t), define
+At time $t$, define
 
-[
-X_t = [A,C,E,R,B,D,S,M,L]
-]
+$$
+X_t = [A, C, E, R, B, D, S, M, L]
+$$
 
 where:
 
-- (A): AI/scientific-intelligence capability
-- (C): compute availability
-- (E): energy abundance
-- (R): robotics and laboratory automation
-- (B): biotechnology maturity
-- (D): data and measurement capability
-- (S): space accessibility / orbital experimental capacity
-- (M): manufacturing capability
-- (L): clinical translation efficiency
+| Symbol | Component | Candidate operational proxy |
+|---|---|---|
+| $A$ | AI / scientific-intelligence capability | METR 50%-success task horizon of the best available agent |
+| $C$ | Compute availability | Installed AI compute stock, FLOP/s |
+| $E$ | Energy abundance | Electricity supplied to data centres and labs, TWh/yr, adjusted for unmet interconnection requests |
+| $R$ | Robotics and laboratory automation | Experiments per researcher per year in tracked self-driving-lab domains |
+| $B$ | Biotechnology maturity | Inverse cost per genome and per edited cell line; modality classes in human trials |
+| $D$ | Data and measurement capability | Size of openly accessible longitudinal multi-omic cohorts |
+| $S$ | Space accessibility / orbital experimental capacity | Inverse launch cost per kg to LEO; orbital research payload mass per year |
+| $M$ | Manufacturing capability | Advanced-node wafer starts per year; cell- and gene-therapy manufacturing capacity |
+| $L$ | Clinical translation efficiency | Inverse of median time from IND filing to approval |
 
-Each component should be normalized to a baseline year, initially 2026 = 1.
+Each component is normalized to a baseline year, initially 2026 = 1. Proxies and data sources must be fixed before the first forecast is scored.
 
-## 2. Gross acceleration factor
+## 2. Gross acceleration index
 
-Use a weighted geometric mean:
+### 2.1 Default: weighted geometric mean
 
-[
-FTAF_t =
-A_t^{0.25}
-C_t^{0.15}
-E_t^{0.10}
-R_t^{0.10}
-B_t^{0.15}
-D_t^{0.05}
-S_t^{0.05}
-M_t^{0.05}
-L_t^{0.10}
-]
+$$
+FTAF_t = A_t^{0.25}\, C_t^{0.15}\, E_t^{0.10}\, R_t^{0.10}\, B_t^{0.15}\, D_t^{0.05}\, S_t^{0.05}\, M_t^{0.05}\, L_t^{0.10}
+$$
 
-Weights are provisional and must be sensitivity-tested.
+Weights sum to 1, are provisional and must be sensitivity-tested (including a biomedical variant with a larger weight on $L$).
 
-A geometric rather than arithmetic aggregation is used because severe weakness in one necessary subsystem should not be fully compensated by extreme strength in another.
+A weighted geometric mean is a Cobb–Douglas aggregate with elasticity of substitution $\sigma = 1$: a proportional gain in one component fully offsets a weighted proportional loss in another. It only collapses when a component reaches zero, so it encodes weak complementarity only.
 
-## 3. Friction and diffusion
+### 2.2 Bottleneck-sensitive: CES
 
-Let:
+$$
+FTAF_t = \left( \sum_j w_j\, X_{j,t}^{\rho} \right)^{1/\rho}, \qquad \sigma = \frac{1}{1-\rho}
+$$
 
-- (BPI_t in [0,1]): Bottleneck & Risk Index
-- (DAI_t in [0,1]): Diffusion & Accessibility Index
-- (EMS_t in [0,1]): Evidence Maturity Score
+- $\rho \to 0$ ($\sigma = 1$): geometric mean (2.1).
+- $\rho < 0$ ($\sigma < 1$): complements; the weakest subsystem increasingly limits the index.
+- $\rho \to -\infty$: Leontief weakest-link, $FTAF_t = \min_j X_{j,t}$.
 
-Then:
+$\sigma$ is a key uncertain parameter and is sampled in the Monte Carlo (Section 11).
 
-[
-F^{effective}_t = FTAF_t (1-BPI_t) DAI_t EMS_t
-]
+### 2.3 Level, growth rate, acceleration
+
+$FTAF_t$ is a level and equals 1 in 2026 by construction. Define its growth rate
+
+$$
+g_F(t) = \frac{d \ln FTAF_t}{dt}.
+$$
+
+"Acceleration" in this framework means $dg_F/dt > 0$ (super-exponential growth), not $d^2 FTAF/dt^2 > 0$, which any exponential satisfies.
+
+## 3. Friction, evidence and diffusion
+
+The three correction terms act at different levels.
+
+**System level.** $BPI_t \in [0,1]$ is the Bottleneck & Risk Index. It covers only constraints not already measured by $X_t$ (e.g. reproducibility, safety, capital, geopolitics, regulation beyond $L$). Energy, fabrication and translation limits are in $E$, $M$ and $L$ and must not be counted again.
+
+$$
+F^{sys}_t = FTAF_t \, (1 - BPI_t)
+$$
+
+**Intervention level.** For intervention or claim $j$:
+
+- $EMS_j \in [0,1]$, the Evidence Maturity Score (Section 8), weights evidence when updating the readiness factor $G_j$ of the arrival hazard (Section 10).
+- $DAI_j \in [0,1]$, the Diffusion & Accessibility Index, converts arrival probability into population impact.
+
+EMS and DAI are not multiplied into $F^{sys}_t$.
 
 ## 4. Historical Technology Acceleration Baseline
 
-For historical metric (i), estimate a log-growth rate:
+For historical metric $i$, estimate a log-growth rate. The two-point form is
 
-[
-k_i = \frac{\ln(V_{i,t_2}/V_{i,t_1})}{t_2-t_1}
-]
+$$
+k_i = \frac{\ln\left(V_{i,t_2} / V_{i,t_1}\right)}{t_2 - t_1},
+$$
 
-For decreasing-cost metrics, invert the ratio.
+but $k_i$ should in practice be estimated by regression of $\ln V_i$ on $t$ over the full series, with a standard error. For decreasing-cost metrics, invert the ratio.
 
-The historical baseline is:
+The historical baseline is
 
-[
-k_{HTAB} = sum_i w_i k_i
-]
+$$
+k_{HTAB} = \sum_i w_i\, k_i,
+$$
 
-and the current Technology Acceleration Ratio:
+and the current Technology Acceleration Ratio is
 
-[
-TAR_t = \frac{k_{current,t}}{k_{HTAB}}
-]
+$$
+TAR_t = \frac{k_{current,t}}{k_{HTAB}}.
+$$
 
 Interpretation:
 
-- (TAR < 1): slower than historical baseline
-- (TAR \approx 1): similar to historical baseline
-- (TAR > 1): accelerated regime
+- $TAR < 1$: slower than historical baseline
+- $TAR \approx 1$: similar to historical baseline
+- $TAR > 1$: accelerated regime
+
+Requirements:
+
+- The series list must include domains that stagnated (e.g. drugs approved per R&D dollar, crop yields, transport speed, construction productivity), not only known success stories.
+- Series and weights $w_i$ are fixed before current data are compared.
+- $TAR$ is always reported with an uncertainty interval; acceleration requires its lower bound to exceed 1.
 
 ## 5. Growth-model comparison
 
 For every major time series, fit at least:
 
 1. Linear:
-[
-y(t)=a+bt
-]
+$$
+y(t) = a + bt
+$$
 
 2. Exponential:
-[
-y(t)=ae^{kt}
-]
+$$
+y(t) = a e^{kt}
+$$
 
 3. Power law:
-[
-y(t)=at^b
-]
+$$
+y(t) = a t^{b}
+$$
 
 4. Logistic:
-[
-y(t)=\frac{L}{1+e^{-k(t-t_0)}}
-]
+$$
+y(t) = \frac{L}{1 + e^{-k(t - t_0)}}
+$$
 
 5. Piecewise / change-point models.
 
 Model selection should use rolling out-of-sample error plus AIC/BIC and residual diagnostics. No permanent exponential assumption is allowed.
 
+Cautions:
+
+- The power law depends on the origin of $t$; fix it in advance and report it.
+- Logistic fits before the inflection point leave the ceiling $L$ essentially unidentified; report its profile likelihood, not a point estimate.
+- AIC/BIC are only comparable between models fitted to the same response, on the same scale, with the same error structure. Models fitted in levels and in logs are compared by out-of-sample error only.
+
 ## 6. Scientific translation
 
-Define Scientific Cycle Time:
+For a closed experimental loop, define Scientific Cycle Time (latency of one loop):
 
-[
-SCT = t_{new\ hypothesis} - t_{prior\ hypothesis}
-]
+$$
+SCT = t_{\text{new hypothesis}} - t_{\text{prior hypothesis}}
+$$
 
-for a closed experimental loop.
+and the Scientific Acceleration Factor
 
-Define Scientific Acceleration Factor:
+$$
+SAF_{science} = \frac{SCT_{baseline}}{SCT_t}.
+$$
 
-[
-SAF_{science} = \frac{SCT_{baseline}}{SCT_t}
-]
+Because latency can fall while the number of loops falls too, also track throughput:
 
-Define Translation Acceleration Factor:
+$$
+Q_t = \text{validated and independently replicated discoveries per unit time in a fixed domain.}
+$$
 
-[
-TAF = \frac{T_{baseline, discovery\rightarrow clinic}}{T_{current, discovery\rightarrow clinic}}
-]
+Define the Translation Acceleration Factor
+
+$$
+TAF = \frac{T_{baseline,\ \text{discovery} \rightarrow \text{clinic}}}{T_{current,\ \text{discovery} \rightarrow \text{clinic}}}.
+$$
 
 These variables attempt to measure conversion of computational progress into physical and clinical progress.
 
 ## 7. Longevity Translation Index
 
-Track progression of an intervention through:
+Track progression of an intervention through
 
-[
-L_0=\text{hypothesis}
-ightarrow
-L_1=\text{in vitro}
-ightarrow
-L_2=\text{animal}
-ightarrow
-L_3=\text{large animal}
-ightarrow
-L_4=\text{Phase I}
-ightarrow
-L_5=\text{Phase II}
-ightarrow
-L_6=\text{Phase III}
-ightarrow
-L_7=\text{approval}
-ightarrow
-L_8=\text{demonstrated clinical / mortality benefit}
-]
+$$
+L_0 \rightarrow L_1 \rightarrow L_2 \rightarrow L_3 \rightarrow L_4 \rightarrow L_5 \rightarrow L_6 \rightarrow L_7 \rightarrow L_8
+$$
 
-The model should estimate transition hazards between levels rather than treating a preclinical result as equivalent to a clinical outcome.
+with $L_0$ = hypothesis, $L_1$ = in vitro, $L_2$ = animal, $L_3$ = large animal, $L_4$ = Phase I, $L_5$ = Phase II, $L_6$ = Phase III, $L_7$ = approval, $L_8$ = demonstrated clinical / mortality benefit.
+
+The model should estimate transition hazards and transition times between levels, using historical baselines (e.g. Wong, Siah & Lo 2019), rather than treating a preclinical result as equivalent to a clinical outcome.
 
 ## 8. Evidence Maturity Score
 
@@ -176,41 +196,49 @@ Suggested ordinal mapping:
 - 0.85 — independent replication
 - 1.00 — demonstrated clinically meaningful endpoint / mortality benefit with replication
 
-Values are provisional.
+Values are provisional. EMS is intervention-level (see Section 3).
 
 ## 9. Longevity Escape Velocity proxy
 
-Let (HLE(t)) be expected healthy-life expectancy at time (t).
+**Period definition (framework default).** Let $HALE_x(t)$ be period healthy-life expectancy at fixed age $x$ (default $x = 65$) in calendar year $t$. Define
 
-Define:
-
-[
-LEV(t)=\frac{dHLE}{dt}
-]
+$$
+LEV_x(t) = \frac{\partial\, HALE_x(t)}{\partial t}.
+$$
 
 Interpretation:
 
-- (LEV < 0): expected healthy years are being lost faster than medicine adds them.
-- (0 < LEV < 1): medicine offsets part of chronological ageing.
-- (LEV \geq 1): operational definition of longevity escape velocity for this framework.
+- $LEV_x < 0$: healthy-life expectancy at age $x$ is falling.
+- $0 < LEV_x < 1$: medicine offsets part of chronological ageing.
+- $LEV_x \geq 1$: operational definition of longevity escape velocity for this framework.
+
+**Individual definition (equivalent).** For an individual, let $h(t)$ be *remaining* expected healthy life. Ageing alone makes $h$ decrease, so escape velocity is $dh/dt \geq 0$. Do not combine remaining life expectancy with a threshold of 1.
+
+**Baseline.** Record period life expectancy has risen by about 0.25 years per year since 1840 (Oeppen & Vaupel 2002), so the current proxy value is of order 0.2–0.3.
 
 This is a forecasting construct, not an accepted clinical metric.
 
 ## 10. Technology Survival Ladder
 
-For milestone therapy (j), define time-dependent arrival hazard:
+For milestone therapy class $j$, define the time-dependent arrival hazard
 
-[
-\lambda_j(t)=\lambda_{0,j}
-[F^{effective}_t]^{\alpha_j}
-M_j(t)
-]
+$$
+\lambda_j(t) = \lambda_{0,j} \left[ F^{sys}_t \right]^{\alpha_j} G_j(t)
+$$
 
-Then cumulative arrival probability by time (T):
+where:
 
-[
-P_j(T)=1-\exp\left(-\int_0^T \lambda_j(t)dt\right)
-]
+- $\lambda_{0,j}$: baseline hazard in 2026;
+- $\alpha_j$: sensitivity of class $j$ to system-wide progress;
+- $G_j(t)$: readiness factor from the class's current LTI level and historical transition probabilities, updated with EMS-weighted evidence.
+
+Cumulative arrival probability from 2026 ($t = 0$) to time $T$:
+
+$$
+P_j(T) = 1 - \exp\left( -\int_0^T \lambda_j(t)\, dt \right)
+$$
+
+Population impact is $P_j(T) \cdot DAI_j$.
 
 A person's "technology survival ladder" is the sequence of future medical milestones that become reachable while the individual remains alive and sufficiently healthy to benefit.
 
@@ -221,21 +249,36 @@ It is not a personal mortality calculator.
 Future versions should:
 
 1. Specify distributions for annual growth and slowdown in each subsystem.
-2. Sample bottlenecks and discontinuous breakthroughs.
-3. Simulate at least (10^5) trajectories.
-4. Report medians and 10/50/90% intervals.
-5. Score forecasts retrospectively using Brier scores and calibration plots.
-6. Update priors at fixed intervals rather than after emotionally salient news.
+2. Sample the elasticity of substitution $\sigma$ (Section 2.2).
+3. Sample bottlenecks and discontinuous breakthroughs.
+4. Simulate at least $10^5$ trajectories.
+5. Report medians and 10/50/90% intervals.
+6. Score forecasts retrospectively using Brier scores and calibration plots.
+7. Update priors at fixed intervals rather than after emotionally salient news.
 
 ## 12. Falsification criteria
 
-The Saka Law should be weakened or rejected as a useful forecasting hypothesis if, over a sufficiently long measurement window:
+Windows start on 1 January 2026. Thresholds are proposals to be fixed in a preregistration before any window closes.
 
-- recursive AI capability improves but scientific cycle time does not fall;
-- scientific output increases without an increase in independently replicated results;
-- compute and algorithmic gains fail to translate into experimentally validated knowledge;
-- biological translation times remain statistically unchanged;
-- current acceleration metrics revert to the historical baseline;
+| # | Prediction | Window | Supports the hypothesis if… |
+|---|---|---|---|
+| P1 | Cross-domain acceleration | 2026–2031 | $TAR > 1.5$, lower 80% bound $> 1$, in at least 3 HTAB domains |
+| P2 | Rising growth rate | 2026–2031 | $dg_F/dt > 0$, 80% interval excluding 0 |
+| P3 | Research productivity reverses | 2026–2036 | Research productivity (Bloom et al. 2020 sense) rises in at least 2 of their domains |
+| P4 | Autonomy keeps growing | 2026–2031 | METR 50% time-horizon doubling time $\leq$ 12 months |
+| P5 | Faster experimental loops | 2026–2031 | Median SCT falls $\geq$ 50% in at least 2 self-driving-lab domains, with no fall in $Q_t$ |
+| P6 | Replicated AI discoveries | 2026–2031 | Annual independently replicated AI-originated discoveries at least double |
+| P7 | Faster translation | 2026–2036 | Median IND-to-approval time falls $\geq$ 20% vs 2015–2025 in at least one therapeutic area |
+| P8 | Better clinical success | 2026–2036 | Phase I-to-approval probability improves $\geq$ 30% vs Wong et al. 2019 in at least one area |
+
+The Saka Law should be weakened or rejected as a useful forecasting hypothesis if, by the end of the relevant window:
+
+- $TAR$ is not distinguishable from 1 in a majority of HTAB domains;
+- AI capability and autonomy improve (P4) but SCT, $Q_t$ and replication do not (P5, P6 fail);
+- biological translation times and success probabilities remain statistically unchanged (P7, P8 fail);
+- $LEV_{65}(t)$ in the largest high-income populations stays below 0.3 through 2046;
 - persistent physical, economic or regulatory bottlenecks dominate the feedback loop.
+
+Success of P1–P6 with failure of P7, P8 and the LEV threshold would support acceleration in computation and discovery but not its extension to biomedicine.
 
 The model is therefore designed to permit a negative result.
