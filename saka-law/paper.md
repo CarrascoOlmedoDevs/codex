@@ -417,7 +417,7 @@ $$
 
 Population impact is then $P_j(T)$ multiplied by the class's projected $DAI_j$.
 
-In version 0.2, $\lambda_{0,j}$, $\alpha_j$ and $G_j$ are not estimated. Doing so requires the LTI transition data described in Section 10. This should be interpreted as technology-arrival forecasting, not as a personalized survival probability.
+In the current version, $\lambda_{0,j}$, $\alpha_j$ and $G_j$ are not estimated. Doing so requires the LTI transition data described in Section 10. This should be interpreted as technology-arrival forecasting, not as a personalized survival probability.
 
 ---
 
@@ -466,7 +466,7 @@ A reasonable scenario family for FTAF should include:
 - **central:** sustained AI/science acceleration with progressively declining growth rates;
 - **aggressive:** major breakthroughs in AI, automation, energy or manufacturing that extend the high-growth regime.
 
-Version 0.3.1 does not attach numbers to these scenarios. They will be quantified once the proxies of Section 7.1 have been populated.
+The current version does not attach numbers to these scenarios. They will be quantified once the proxies of Section 7.1 have been populated.
 
 The central qualitative expectation for 2046 is not "immortality". It is increased probability of:
 
@@ -505,9 +505,9 @@ The framework therefore treats "systemic rejuvenation" and "longevity escape vel
 
 ## 17. Predictions that make the framework falsifiable
 
-The qualitative predictions of version 0.1 are replaced by dated, quantitative ones.
+The framework makes dated, quantitative predictions.
 
-**This version is not the preregistration.** Version 0.3.1 fixes the *form* of each prediction and the rule for deriving its threshold, but not the thresholds themselves. The preregistration is made when that rule has been applied to historical data and the resulting numbers are frozen, with a timestamp, in a public file (planned: `forecasts/preregistration-2026.json`), before any data from the tested windows are examined.
+**This version is not the preregistration.** The current version fixes the *form* of each prediction and the rule for deriving its threshold, but not the thresholds themselves. The preregistration is made when that rule has been applied to historical data and the resulting numbers are frozen, with a timestamp, in a public file (planned: `forecasts/preregistration-2026.json`), before any data from the tested windows are examined.
 
 **Windows.** Each window starts on the date the preregistration is frozen, not on 1 January 2026; data observed before that date are used only to estimate baselines. The window labels below (2026–2031, 2026–2036) are nominal and assume a freeze in late 2026.
 
