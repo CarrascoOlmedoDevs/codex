@@ -1,4 +1,4 @@
-# Saka Forecasting Engine — Model Specification v0.3
+# Saka Forecasting Engine — Model Specification v0.3.1
 
 ## 1. State vector
 
@@ -181,6 +181,18 @@ $$
 
 These variables attempt to measure conversion of computational progress into physical and clinical progress.
 
+### 6.1 AI attribution scale
+
+Grade each discovery by the role of AI in its intellectual work:
+
+- $AI_0$: auxiliary tool (search, writing, routine code);
+- $AI_1$: data analysis or modelling on a human-designed study;
+- $AI_2$: partial hypothesis generation or experimental design, humans leading;
+- $AI_3$: principal contribution — AI proposed the hypothesis and designed the decisive experiment or proof;
+- $AI_4$: essentially autonomous — AI proposed, executed (in silico or via automated labs) and interpreted; humans approve and verify.
+
+Assigned from CRediT statements and methods sections by two independent coders blind to the prediction; report Cohen's $\kappa$; resolve disagreements to the lower level. Only $AI_3$ and $AI_4$ count toward P6.
+
 ## 7. Longevity Translation Index
 
 Track progression of an intervention through
@@ -192,6 +204,11 @@ $$
 with $L_0$ = hypothesis, $L_1$ = in vitro, $L_2$ = animal, $L_3$ = large animal, $L_4$ = Phase I, $L_5$ = Phase II, $L_6$ = Phase III, $L_7$ = approval, $L_8$ = demonstrated clinical / mortality benefit.
 
 The model should estimate transition hazards and transition times between levels, using historical baselines (e.g. Wong, Siah & Lo 2019), rather than treating a preclinical result as equivalent to a clinical outcome.
+
+Requirements (also for P7, P8):
+
+- **Composition bias:** compare within therapeutic area × modality strata and IND-filing-year cohorts; combine strata with fixed weights.
+- **Censoring:** estimate time to approval with Kaplan–Meier and Cox models (covariates: area, modality); model phase progression $L_4 \rightarrow L_5 \rightarrow L_6 \rightarrow L_7$ as a multistate model with failure as a competing absorbing state.
 
 ## 8. Evidence Maturity Score
 
@@ -268,11 +285,11 @@ Future versions should:
 
 ## 12. Falsification criteria
 
-Windows start on 1 January 2026.
+v0.3.1 is **not** the preregistration: it fixes the form of each prediction and the threshold rule. The preregistration is the frozen, timestamped output of that rule (planned: `forecasts/preregistration-2026.json`), made before any data from the tested windows are examined. Each window starts on the freeze date; earlier data are used only for baselines. Window labels below are nominal, assuming a freeze in late 2026.
 
 Thresholds below are **placeholders**. Before preregistration, each is replaced by the larger of (1) the value exceeded with at most 5% probability under the historical regime, from the statistic's variability over past windows of equal length, and (2) the minimum scientifically or clinically relevant effect.
 
-Report 50/80/95% intervals; the **90% interval** is the preregistered decision criterion.
+Report 50/80/90/95% intervals; the **90% interval** is the preregistered decision criterion.
 
 | # | Prediction | Window | Supports the hypothesis if… |
 |---|---|---|---|
@@ -281,9 +298,9 @@ Report 50/80/95% intervals; the **90% interval** is the preregistered decision c
 | P3 | Research productivity reverses | 2026–2036 | Research productivity (Bloom et al. 2020 sense) rises in at least 2 of their domains |
 | P4 | Autonomy keeps growing | 2026–2031 | METR 50% time-horizon doubling time $\leq$ 12 months, and non-software components of $A$ rising |
 | P5 | Faster experimental loops | 2026–2031 | Median SCT falls $\geq$ 50% in at least 2 self-driving-lab domains, with no fall in $Q_t$ |
-| P6 | Replicated AI discoveries | 2026–2031 | Annual independently replicated AI-originated discoveries at least double |
-| P7 | Faster translation | 2026–2036 | Median IND-to-approval time falls $\geq$ 20% vs 2015–2025 in at least one therapeutic area |
-| P8 | Better clinical success | 2026–2036 | Phase I-to-approval probability improves $\geq$ 30% vs Wong et al. 2019 in at least one area |
+| P6 | Replicated AI discoveries | 2026–2031 | Annual independently replicated $AI_3$/$AI_4$ discoveries (Section 6.1) at least double |
+| P7 | Faster translation | 2026–2036 | Median IND-to-approval time (survival analysis, within area × modality strata) falls $\geq$ 20% vs 2015–2025 IND cohorts in at least one therapeutic area |
+| P8 | Better clinical success | 2026–2036 | Phase I-to-approval probability (multistate model, within strata) improves $\geq$ 30% vs Wong et al. 2019 in at least one area |
 
 The Saka Law should be weakened or rejected as a useful forecasting hypothesis if, by the end of the relevant window:
 
