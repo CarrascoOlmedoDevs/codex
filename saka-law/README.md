@@ -1,4 +1,4 @@
-# The Saka Law
+# Hypothesis the Saka 
 
 **A framework for measuring recursive technological acceleration and its implications for biomedical longevity**
 
