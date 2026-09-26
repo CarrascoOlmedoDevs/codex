@@ -285,7 +285,7 @@ Future versions should:
 
 ## 12. Falsification criteria
 
-v0.3.1 is **not** the preregistration: it fixes the form of each prediction and the threshold rule. The preregistration is the frozen, timestamped output of that rule (planned: `forecasts/preregistration-2026.json`), made before any data from the tested windows are examined. Each window starts on the freeze date; earlier data are used only for baselines. Window labels below are nominal, assuming a freeze in late 2026.
+The current version is **not** the preregistration: it fixes the form of each prediction and the threshold rule. The preregistration is the frozen, timestamped output of that rule (planned: `forecasts/preregistration-2026.json`), made before any data from the tested windows are examined. Each window starts on the freeze date; earlier data are used only for baselines. Window labels below are nominal, assuming a freeze in late 2026.
 
 Thresholds below are **placeholders**. Before preregistration, each is replaced by the larger of (1) the value exceeded with at most 5% probability under the historical regime, from the statistic's variability over past windows of equal length, and (2) the minimum scientifically or clinically relevant effect.
 
