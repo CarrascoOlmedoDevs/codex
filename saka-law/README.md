@@ -2,7 +2,7 @@
 
 **A framework for measuring recursive technological acceleration and its implications for biomedical longevity**
 
-Version 0.2 — 26 September 2026
+Version 0.3 — 26 September 2026
 
 This directory contains a conceptual forecasting paper developed around a proposed idea called the **Saka Law of Recursive Technological Acceleration**.
 
@@ -54,7 +54,7 @@ saka-law/
 
 For now cite as:
 
-**Carrasco, J. (Saka). (2026). _The Saka Law: Measuring Recursive Technological Acceleration and Its Implications for Biomedical Longevity_. Version 0.2.**
+**Carrasco, J. (Saka). (2026). _The Saka Law: Measuring Recursive Technological Acceleration and Its Implications for Biomedical Longevity_. Version 0.3.**
 
 ## Important note
 
